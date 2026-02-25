@@ -1,0 +1,23 @@
+logging:
+  level:
+    root: INFO
+    com.demo: DEBUG
+
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/demo}
+    username: ${SPRING_DATASOURCE_USERNAME:demo}
+    password: ${SPRING_DATASOURCE_PASSWORD:PasswordO1.}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+app:
+  jwt:
+    secret: ${APP_JWT_SECRET:demo-jwt-secret-key-min-32-characters-long-for-hs256}
+    expiration-seconds: ${APP_JWT_EXPIRATION_SECONDS:3600}

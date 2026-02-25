@@ -1,0 +1,23 @@
+# Build / IDE
+target/
+build/
+dist/
+.angular/
+node_modules/
+*.iml
+.idea/
+.vscode/
+*.log
+*.class
+
+# Env (optional: commit .env.example instead)
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test
+coverage/
+*.lcov
