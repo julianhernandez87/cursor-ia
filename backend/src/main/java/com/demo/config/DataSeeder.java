@@ -1,5 +1,6 @@
 package com.demo.config;
 
+import com.demo.entity.DocumentType;
 import com.demo.entity.RoleEntity;
 import com.demo.entity.UserEntity;
 import com.demo.repository.RoleRepository;
@@ -26,7 +27,11 @@ public class DataSeeder {
 
             if (userRepository.findByEmail("admin@local").isEmpty()) {
                 UserEntity admin = new UserEntity();
+                admin.setFullName("Admin");
+                admin.setDocumentType(DocumentType.CC);
+                admin.setDocumentNumber("ADMIN-SEED");
                 admin.setEmail("admin@local");
+                admin.setPhone(null);
                 admin.setPasswordHash(passwordEncoder.encode("Admin123!"));
                 admin.setEnabled(true);
                 admin.getRoles().add(adminRole);

@@ -72,3 +72,16 @@ input:focus, button:focus, select:focus, textarea:focus {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
+
+/* Layout and responsiveness */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+}
+
+@media (max-width: 640px) {
+  .container { padding-left: var(--space-3); padding-right: var(--space-3); }
+}

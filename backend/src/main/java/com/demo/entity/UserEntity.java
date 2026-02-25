@@ -2,6 +2,8 @@ package com.demo.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,8 +34,21 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "full_name")
+    private String fullName;
+
+    @Column(name = "document_type")
+    @Enumerated(EnumType.STRING)
+    private DocumentType documentType;
+
+    @Column(name = "document_number", unique = true)
+    private String documentNumber;
+
     @Column(name = "email", nullable = false, unique = true)
     private String email;
+
+    @Column(name = "phone")
+    private String phone;
 
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;

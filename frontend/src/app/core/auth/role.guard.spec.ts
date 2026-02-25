@@ -12,7 +12,7 @@ describe('roleGuard', () => {
   beforeEach(() => {
     auth = jasmine.createSpyObj('AuthService', ['getCachedProfile', 'getProfile', 'setCachedProfile', 'hasRole']);
     router = jasmine.createSpyObj('Router', ['navigate']);
-    route = { data: { roles: ['ADMIN'] } } as ActivatedRouteSnapshot;
+    route = { data: { roles: ['ADMIN'] } } as unknown as ActivatedRouteSnapshot;
     TestBed.configureTestingModule({
       providers: [
         { provide: AuthService, useValue: auth },

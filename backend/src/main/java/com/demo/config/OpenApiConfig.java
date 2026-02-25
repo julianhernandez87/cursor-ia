@@ -49,6 +49,10 @@ public class OpenApiConfig {
 
         return openApi -> {
             openApi.getComponents().getSchemas().put(resolvedSchema.schema.getName(), errorSchema);
+            if (resolvedSchema.referencedSchemas != null) {
+                resolvedSchema.referencedSchemas.forEach((name, schema) ->
+                        openApi.getComponents().getSchemas().put(name, schema));
+            }
             openApi.getPaths().values().forEach(pathItem ->
                     pathItem.readOperations().forEach(operation -> {
                         operation.getResponses()

@@ -1,0 +1,86 @@
+// Design tokens – spacing, typography, radius, shadows, colors
+// Export to CSS custom properties for use in components (var(--color-*))
+
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 24px;
+$space-6: 32px;
+$space-8: 48px;
+
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-base: 1rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+$font-size-2xl: 1.5rem;
+
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-lg: 14px;
+
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+$transition: 0.2s ease;
+
+// Banking palette (enterprise blue)
+$color-primary: #1e3a5f;
+$color-primary-hover: #152a47;
+$color-primary-light: #2c5282;
+$color-accent: #2563eb;
+$color-danger: #dc2626;
+$color-danger-hover: #b91c1c;
+$color-success: #16a34a;
+$color-success-light: #22c55e;
+$color-bg: #f1f5f9;
+$color-surface: #ffffff;
+$color-text: #0f172a;
+$color-text-muted: #64748b;
+$color-border: #e2e8f0;
+$color-sidebar-bg: #0f172a;
+$color-sidebar-active: #1e3a5f;
+
+:root {
+  --color-primary: #{$color-primary};
+  --color-primary-hover: #{$color-primary-hover};
+  --color-primary-light: #{$color-primary-light};
+  --color-accent: #{$color-accent};
+  --color-danger: #{$color-danger};
+  --color-danger-hover: #{$color-danger-hover};
+  --color-success: #{$color-success};
+  --color-bg: #{$color-bg};
+  --color-surface: #{$color-surface};
+  --color-text: #{$color-text};
+  --color-text-muted: #{$color-text-muted};
+  --color-border: #{$color-border};
+  --color-sidebar-bg: #{$color-sidebar-bg};
+  --color-sidebar-active: #{$color-sidebar-active};
+  --radius-sm: #{$radius-sm};
+  --radius-md: #{$radius-md};
+  --radius-lg: #{$radius-lg};
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+  --space-1: #{$space-1};
+  --space-2: #{$space-2};
+  --space-3: #{$space-3};
+  --space-4: #{$space-4};
+  --space-5: #{$space-5};
+  --space-6: #{$space-6};
+  --transition: #{$transition};
+}
+
+[data-theme="dark"] {
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --color-bg: #0f172a;
+  --color-surface: #1e293b;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
+  --color-border: #334155;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+}

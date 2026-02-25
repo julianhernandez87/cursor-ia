@@ -51,7 +51,7 @@ class UsersControllerTest {
     @WithMockUser(roles = "ADMIN")
     void list_returnsUsers() throws Exception {
         when(userService.findAll()).thenReturn(List.of(
-                new UserResponseDto(1L, "admin@local", true, Set.of("ADMIN"))));
+                new UserResponseDto(1L, null, null, null, "admin@local", null, true, null, null, Set.of("ADMIN"))));
 
         mockMvc.perform(get("/api/users"))
                 .andExpect(status().isOk())
@@ -70,7 +70,7 @@ class UsersControllerTest {
     void create_returns201() throws Exception {
         UserCreateDto dto = new UserCreateDto("u@e.com", "password1", Set.of("USER"));
         when(userService.create(any(UserCreateDto.class)))
-                .thenReturn(new UserResponseDto(2L, "u@e.com", true, Set.of("USER")));
+                .thenReturn(new UserResponseDto(2L, null, null, null, "u@e.com", null, true, null, null, Set.of("USER")));
 
         mockMvc.perform(post("/api/users")
                         .with(csrf())
@@ -86,7 +86,7 @@ class UsersControllerTest {
     void update_returnsOk() throws Exception {
         UserUpdateDto dto = new UserUpdateDto("updated@e.com", true, Set.of("ADMIN"));
         when(userService.update(eq(1L), any(UserUpdateDto.class)))
-                .thenReturn(new UserResponseDto(1L, "updated@e.com", true, Set.of("ADMIN")));
+                .thenReturn(new UserResponseDto(1L, null, null, null, "updated@e.com", null, true, null, null, Set.of("ADMIN")));
 
         mockMvc.perform(put("/api/users/1")
                         .with(csrf())

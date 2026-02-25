@@ -21,7 +21,7 @@ export const roleGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
     take(1),
     map((p) => {
       if (!p) {
-        router.navigate(['/login']);
+        router.navigate(['/sv/login']);
         return false;
       }
       auth.setCachedProfile(p);

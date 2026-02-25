@@ -1,11 +1,18 @@
 package com.demo.service;
 
 import com.demo.dto.auth.LoginResponse;
+import com.demo.dto.auth.RegisterRequestDto;
+import com.demo.dto.user.UserResponseDto;
+import com.demo.entity.DocumentType;
 import com.demo.entity.RoleEntity;
 import com.demo.entity.UserEntity;
+import com.demo.exception.DuplicateDocumentException;
+import com.demo.exception.DuplicateEmailException;
+import com.demo.repository.RoleRepository;
 import com.demo.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -25,6 +32,8 @@ class AuthServiceTest {
 
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private RoleRepository roleRepository;
     @Mock
     private PasswordEncoder passwordEncoder;
     @Mock
@@ -73,5 +82,78 @@ class AuthServiceTest {
 
         assertThatThrownBy(() -> authService.login("unknown@local", "pass"))
                 .isInstanceOf(org.springframework.security.authentication.BadCredentialsException.class);
+    }
+
+    @Test
+    void register_success_returnsUserResponseDto() {
+        RegisterRequestDto dto = new RegisterRequestDto();
+        dto.setFullName("Juan Pérez");
+        dto.setDocumentType(DocumentType.CC);
+        dto.setDocumentNumber("12345678");
+        dto.setEmail("juan@example.com");
+        dto.setPhone("+5712345678");
+        dto.setPassword("Pass1234");
+        dto.setConfirmPassword("Pass1234");
+
+        when(userRepository.existsByEmail("juan@example.com")).thenReturn(false);
+        when(userRepository.existsByDocumentNumber("12345678")).thenReturn(false);
+        when(roleRepository.findByName("USER")).thenReturn(Optional.of(new RoleEntity(1L, "USER")));
+        when(passwordEncoder.encode("Pass1234")).thenReturn("encoded");
+
+        UserEntity saved = new UserEntity();
+        saved.setId(2L);
+        saved.setFullName("Juan Pérez");
+        saved.setEmail("juan@example.com");
+        saved.setEnabled(true);
+        saved.setRoles(Set.of(new RoleEntity(1L, "USER")));
+        when(userRepository.save(org.mockito.ArgumentMatchers.any(UserEntity.class))).thenReturn(saved);
+
+        UserResponseDto result = authService.register(dto);
+
+        assertThat(result.getId()).isEqualTo(2L);
+        assertThat(result.getEmail()).isEqualTo("juan@example.com");
+        assertThat(result.getFullName()).isEqualTo("Juan Pérez");
+        assertThat(result.getEnabled()).isTrue();
+        assertThat(result.getRoles()).contains("USER");
+
+        ArgumentCaptor<UserEntity> captor = ArgumentCaptor.forClass(UserEntity.class);
+        verify(userRepository).save(captor.capture());
+        assertThat(captor.getValue().getDocumentNumber()).isEqualTo("12345678");
+        assertThat(captor.getValue().getPasswordHash()).isEqualTo("encoded");
+    }
+
+    @Test
+    void register_duplicateEmail_throwsDuplicateEmailException() {
+        RegisterRequestDto dto = new RegisterRequestDto();
+        dto.setFullName("Juan Pérez");
+        dto.setDocumentType(DocumentType.CC);
+        dto.setDocumentNumber("12345678");
+        dto.setEmail("existing@example.com");
+        dto.setPassword("Pass1234");
+        dto.setConfirmPassword("Pass1234");
+
+        when(userRepository.existsByEmail("existing@example.com")).thenReturn(true);
+
+        assertThatThrownBy(() -> authService.register(dto))
+                .isInstanceOf(DuplicateEmailException.class)
+                .hasMessageContaining("existing@example.com");
+    }
+
+    @Test
+    void register_duplicateDocumentNumber_throwsDuplicateDocumentException() {
+        RegisterRequestDto dto = new RegisterRequestDto();
+        dto.setFullName("Juan Pérez");
+        dto.setDocumentType(DocumentType.CC);
+        dto.setDocumentNumber("87654321");
+        dto.setEmail("new@example.com");
+        dto.setPassword("Pass1234");
+        dto.setConfirmPassword("Pass1234");
+
+        when(userRepository.existsByEmail("new@example.com")).thenReturn(false);
+        when(userRepository.existsByDocumentNumber("87654321")).thenReturn(true);
+
+        assertThatThrownBy(() -> authService.register(dto))
+                .isInstanceOf(DuplicateDocumentException.class)
+                .hasMessageContaining("Document number already registered");
     }
 }

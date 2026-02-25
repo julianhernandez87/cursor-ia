@@ -103,8 +103,14 @@ public class UserService {
     private UserResponseDto toResponse(UserEntity user) {
         UserResponseDto dto = new UserResponseDto();
         dto.setId(user.getId());
+        dto.setFullName(user.getFullName());
+        dto.setDocumentType(user.getDocumentType());
+        dto.setDocumentNumber(user.getDocumentNumber());
         dto.setEmail(user.getEmail());
+        dto.setPhone(user.getPhone());
         dto.setEnabled(user.getEnabled());
+        dto.setCreatedAt(user.getCreatedAt());
+        dto.setUpdatedAt(user.getUpdatedAt());
         dto.setRoles(user.getRoles().stream().map(RoleEntity::getName).collect(Collectors.toSet()));
         return dto;
     }

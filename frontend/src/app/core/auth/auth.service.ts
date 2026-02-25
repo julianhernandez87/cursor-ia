@@ -17,6 +17,24 @@ export interface UserProfile {
   roles: string[];
 }
 
+export interface RegisterPayload {
+  fullName: string;
+  documentType: 'CC' | 'CE' | 'PASSPORT';
+  documentNumber: string;
+  email: string;
+  phone?: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export interface UserResponse {
+  id: number;
+  fullName?: string;
+  email: string;
+  enabled: boolean;
+  roles: string[];
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private token: string | null = null;
@@ -38,6 +56,11 @@ export class AuthService {
         this.profile = null;
       })
     );
+  }
+
+  register(payload: RegisterPayload): Observable<UserResponse> {
+    const url = `${this.apiUrl}/api/auth/register`;
+    return this.http.post<UserResponse>(url, payload);
   }
 
   getProfile(): Observable<UserProfile | null> {

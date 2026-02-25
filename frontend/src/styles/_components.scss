@@ -1,0 +1,116 @@
+@use 'tokens' as t;
+
+// Reusable UI classes for SV and login
+.sv-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: t.$space-5;
+}
+
+.sv-card-elevated {
+  @extend .sv-card;
+  box-shadow: var(--shadow-md);
+}
+
+.sv-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: t.$space-2;
+  padding: t.$space-3 t.$space-5;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background t.$transition, box-shadow t.$transition;
+  &:hover:not(:disabled) {
+    background: var(--color-primary-hover);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+}
+
+.sv-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: t.$space-2;
+  padding: t.$space-3 t.$space-5;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background t.$transition, border-color t.$transition;
+  &:hover:not(:disabled) {
+    background: var(--color-bg);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+.sv-input {
+  width: 100%;
+  padding: t.$space-3 t.$space-4;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: t.$font-size-base;
+  transition: border-color t.$transition, box-shadow t.$transition;
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(30, 58, 95, 0.2);
+  }
+  &.invalid {
+    border-color: var(--color-danger);
+  }
+}
+
+.sv-label {
+  display: block;
+  margin-bottom: t.$space-2;
+  font-weight: 500;
+  font-size: t.$font-size-sm;
+  color: var(--color-text);
+}
+
+.sv-link {
+  color: var(--color-primary);
+  text-decoration: underline;
+  font-size: t.$font-size-sm;
+  transition: color t.$transition;
+  &:hover {
+    color: var(--color-primary-hover);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+.sv-section-title {
+  font-size: t.$font-size-xl;
+  font-weight: 600;
+  margin: 0 0 t.$space-4;
+  color: var(--color-text);
+}
+
+.sv-section-subtitle {
+  font-size: t.$font-size-sm;
+  color: var(--color-text-muted);
+  margin: 0 0 t.$space-4;
+}

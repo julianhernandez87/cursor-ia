@@ -2,9 +2,12 @@ package com.demo.controller;
 
 import com.demo.dto.auth.LoginRequest;
 import com.demo.dto.auth.LoginResponse;
+import com.demo.dto.auth.RegisterRequestDto;
 import com.demo.dto.auth.UserProfileDto;
+import com.demo.dto.user.UserResponseDto;
 import com.demo.service.AuthService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,6 +31,12 @@ public class AuthController {
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
         LoginResponse response = authService.login(request.getEmail(), request.getPassword());
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<UserResponseDto> register(@Valid @RequestBody RegisterRequestDto request) {
+        UserResponseDto created = authService.register(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @GetMapping("/me")
